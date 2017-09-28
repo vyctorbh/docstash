@@ -28,6 +28,7 @@ exports.upload = (stream, dir, fileName,length, drive , done) => {
 //Get file from backend
 exports.get = (fileName, done) => {
     const dir = secret.sftp.SSH_ROOT;
+    console.log("Pasta: %s", secret.sftp.SSH_ROOT);
     sftp.get(`${dir}${fileName}`,{encoding: null})
     .then((res) => {
       // console.log(res)
@@ -41,10 +42,11 @@ exports.get = (fileName, done) => {
 exports.list = (torrent, done) => {
   let parent = null;
     if (torrent) {
-      parent = `${secret.sftp.SSH_ROOT}torrents`;
+      parent = `${secret.sftp.SSH_ROOT}/torrents`;
     } else {
       parent = secret.sftp.SSH_ROOT;
     }
+    console.log("Pasta3: %s", parent);
     sftp.list(parent).then((data) => {
         var files = [];
         data.forEach(f => {
@@ -57,6 +59,7 @@ exports.list = (torrent, done) => {
         done(null, files);
     }).catch((err) => {
         if (err)
+            console.log("Pasta22332");
             console.log(err);
         }
     );

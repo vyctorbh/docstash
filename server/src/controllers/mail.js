@@ -7,7 +7,7 @@ import secret from '../config/secret';
 const transporter = nodemailer.createTransport({
     service: 'Gmail',
     auth: {
-        user: 'docstashcare@gmail.com',
+        user: 'vyctorbh@gmail.com',
         pass: secret.emailPass
     }
 });

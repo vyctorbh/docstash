@@ -6,6 +6,7 @@ import createLogger from 'redux-logger';
 import * as storage from 'redux-storage'
 import createEngine from 'redux-storage-engine-localstorage';
 import reduxStorageActions from '../constants/reduxstorage';
+import DevTools from '../containers/DevTools';
 
 const logger = createLogger();
 
@@ -14,7 +15,7 @@ export default function configureStore(onComplete) {
     const engine = createEngine('Docstash');
     const storeMiddleware = storage.createMiddleware(engine, reduxStorageActions);
 
-    let store = createStore(rootReducer, compose(applyMiddleware(thunk, reduxImmutableStateInvariant(), logger, storeMiddleware), window.devToolsExtension && window.devToolsExtension()));
+    let store = createStore(rootReducer, compose(applyMiddleware(thunk, reduxImmutableStateInvariant(), logger, storeMiddleware), DevTools.instrument()));
 
     const load = storage.createLoader(engine);
     load(store).then(onComplete).catch(() => console.log('Failed to load previous state'));
